@@ -7,7 +7,7 @@ class Class
     currency_symbols={
       "^$"      =>:usd,         # US dollar
       "^\u00A3" =>:gbp,         # Great Britain pound
-      "$"       =>:aud          # ohh crikey
+      "$"       =>:aud          # Australian Dollar
     }
 
     string = string.gsub(/(^[#{currency_symbols.keys}])/, '^\1')
@@ -33,7 +33,24 @@ class Currency
 
   end
 
-  
+  def to(denomination)
+    to_usd = {
+      :gbp =>1.45,
+      :aud =>0.72
+    }
+
+    if @denomination != :usd
+      @amount = (@amount * to_usd[@denomination]).round 2
+      @denomination = :usd
+    end
+
+    @amount = (@amount / to_usd[denomination]).round 2
+    @denomination = denomination
+
+
+    binding.pry
+  end
+
   def amount
     @amount
   end
