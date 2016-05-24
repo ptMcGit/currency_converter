@@ -2,11 +2,11 @@
 require "pry"
 class Currency
 
-  def initialize(amount, currency)
+  def initialize(amount, currency=:usd)
     @amount = amount
     @currency = currency
   end
-
+  
   def amount
     @amount
   end
@@ -14,6 +14,24 @@ class Currency
   def denomination
     @currency
   end
+
+  def to_i
+    Integer(@amount)
+  end
+  
+  def times(num)
+    Currency.new(@amount * num.to_i, @currency)
+  end
+
+  def plus(num)
+    Currency.new(@amount + num.to_i, @currency)
+  end
+
+  def minus(num)
+    Currency.new(@amount - num.to_i, @currency)
+  end
+  
+
 end
 
 a = Currency.new(5, :usd)
